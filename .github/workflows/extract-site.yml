@@ -1,0 +1,30 @@
+name: Extract StoryLights House site
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  extract:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Extract website project
+        run: |
+          unzip -o storylights-house-working-site.zip -d .
+          rm storylights-house-working-site.zip
+
+      - name: Commit extracted website
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "Extract StoryLights House website [skip ci]" || exit 0
+          git push
