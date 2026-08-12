@@ -9,3 +9,4 @@ if (!databaseUrl) {
 export const sql = neon(databaseUrl);
 
 export default sql;
+Fix database connection
